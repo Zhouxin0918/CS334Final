@@ -3,6 +3,7 @@ import pandas as pd
 
 import seaborn as sns
 import matplotlib.pyplot as plt
+import plotly.express as px
 
 from sklearn.impute import KNNImputer
 import warnings
@@ -83,11 +84,44 @@ fat.isnull().sum()
 missing_col = [c for c in fat.columns if fat[c].isnull().sum() != 0]
 print(missing_col)
 
+# scatter plot
+# quantity["Mortality"] = quantity["Deaths"] / quantity["Confirmed"]
+# print("hahaha")
+# print(quantity.columns)
+# print("hahaha")
+
+# fig = px.scatter(
+#     quantity,
+#     x="Confirmed",
+#     y="Animal Products",
+#     size="Mortality",
+#     hover_name="Country",
+#     log_x=False,
+#     size_max=30,
+#     template="simple_white",
+# )
+
+# fig.add_shape(
+#     # Line Horizontal
+#     type="line",
+#     x0=0,
+#     y0=quantity["Animal Products"].mean(),
+#     x1=quantity["Confirmed"].max(),
+#     y1=quantity["Animal Products"].mean(),
+#     line=dict(color="crimson", width=4),
+# )
+
+# need to use dropna instead of fillna to plot this scatterplt
+# fig.show()
+# fat = fat.drop(columns=["Mortality"])
+
+
 fig, ax = plt.subplots(figsize=(20, 15))
 
 mask = np.triu(np.ones_like(fat.corr(), dtype=np.bool))
 mask = mask[1:, :-1]
 corr = fat.corr().iloc[1:, :-1]
+
 
 sns.heatmap(
     corr,
